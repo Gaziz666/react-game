@@ -1,0 +1,10 @@
+.text-center {
+  text-indent: 20px;
+  text-align: justify;
+  margin: 0;
+}
+
+.close-icon-wrapper {
+  margin-top: 5px;
+  width: 30px;
+}

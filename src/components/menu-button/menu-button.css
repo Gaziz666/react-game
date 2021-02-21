@@ -1,0 +1,14 @@
+button.menu-button {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  color: #f7fc00;
+  -webkit-text-stroke: 1px rgba(251, 10, 10, 0.27);
+
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  width: 100px;
+}
