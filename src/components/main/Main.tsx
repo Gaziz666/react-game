@@ -8,6 +8,7 @@ import Footer from '../footer/Footer';
 import Header from '../header/Header';
 import './main.css';
 import StartPage from '../pages/start-page/Start-page';
+import GamePage from '../pages/game-page/game-page';
 
 const Main: React.FC = () => {
   const [about, setAbout] = useState({ open: false });
@@ -38,18 +39,19 @@ const Main: React.FC = () => {
 
   return (
     <div className="main-container">
-      <Header openPopup={openPopup} />
-      <div className="page-wrapper">
-        <Router>
+      <Router>
+        <Header openPopup={openPopup} />
+        <div className="page-wrapper">
           <Route path="/" component={MainBody} exact />
           <Route path="/start" component={StartPage} />
-        </Router>
-      </div>
+          <Route path="/game" component={GamePage} />
+        </div>
 
-      {about.open ? <Popup closePopup={closeAbout} type="about" /> : null}
-      {settings.open ? (
-        <Popup closePopup={closeSettings} type="settings" />
-      ) : null}
+        {about.open ? <Popup closePopup={closeAbout} type="about" /> : null}
+        {settings.open ? (
+          <Popup closePopup={closeSettings} type="settings" />
+        ) : null}
+      </Router>
       <Footer />
     </div>
   );

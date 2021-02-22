@@ -14,6 +14,7 @@ import {
 } from '../../../reducers/game-settings-reducer';
 import { GameSettingsAction } from '../../../actions/game-settings-action';
 import { RootStateType } from '../../../reducers/rootReducer';
+import PlayButton from '../../play-button/play-button';
 
 // prettier-ignore
 const StartPage: React.FC<Props> = ({
@@ -24,68 +25,80 @@ const StartPage: React.FC<Props> = ({
   sizeChange,
   timerChange,
 }: Props) => (
-  <div className="starr-page-wrapper">
-    <FormControl variant="filled">
-      <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
-      <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
-        value={level}
-        onChange={
-          (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
-            levelChange(ev.target.value as LevelType)
-          )
-        }
-      >
-        <MenuItem value="easy">
-          <em>Level</em>
-        </MenuItem>
-        <MenuItem value="easy">easy</MenuItem>
-        <MenuItem value="normal">normal</MenuItem>
-        <MenuItem value="hard">hard</MenuItem>
-      </Select>
-    </FormControl>
-    <FormControl variant="filled">
-      <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
-      <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
-        value={size}
-        onChange={
-          (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
-            sizeChange(ev.target.value as SizeType)
-          )
-        }
-      >
-        <MenuItem value="small">
-          <em>Size</em>
-        </MenuItem>
-        <MenuItem value="small">small</MenuItem>
-        <MenuItem value="medium">medium</MenuItem>
-        <MenuItem value="big">big</MenuItem>
-      </Select>
-    </FormControl>
-    <FormControl variant="filled">
-      <InputLabel id="demo-simple-select-filled-label">Age</InputLabel>
-      <Select
-        labelId="demo-simple-select-filled-label"
-        id="demo-simple-select-filled"
-        value={timer}
-        onChange={
-          (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
-            timerChange(ev.target.value as TimerType)
-          )
-        }
-      >
-        <MenuItem value="none">
-          <em>Timer</em>
-        </MenuItem>
-        <MenuItem value="none">none</MenuItem>
-        <MenuItem value="5">5</MenuItem>
-        <MenuItem value="10">10</MenuItem>
-        <MenuItem value="15">15</MenuItem>
-      </Select>
-    </FormControl>
+  <div className="start-page-wrapper">
+    <div className="select-game">
+      <h3>Select game settings</h3>
+      <div className="select-wrapper">
+        <FormControl variant="filled" className="select">
+          <InputLabel id="demo-simple-select-filled-label">Level</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={level}
+            onChange={
+              (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
+                levelChange(ev.target.value as LevelType)
+              )
+            }
+          >
+            <MenuItem value="1">
+              <em>Level</em>
+            </MenuItem>
+            <MenuItem value="1">easy</MenuItem>
+            <MenuItem value="2">normal</MenuItem>
+            <MenuItem value="3">hard</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      <div className="select-wrapper">
+        <FormControl variant="filled" className="select">
+          <InputLabel id="demo-simple-select-filled-label">Size</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={size}
+            onChange={
+              (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
+                sizeChange(ev.target.value as SizeType)
+              )
+            }
+          >
+            <MenuItem value="small">
+              <em>Size</em>
+            </MenuItem>
+            <MenuItem value="10">small</MenuItem>
+            <MenuItem value="15">medium</MenuItem>
+            <MenuItem value="20">big</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+      <div className="select-wrapper">
+        <FormControl variant="filled" className="select">
+          <InputLabel id="demo-simple-select-filled-label">Timer</InputLabel>
+          <Select
+            labelId="demo-simple-select-filled-label"
+            id="demo-simple-select-filled"
+            value={timer}
+            onChange={
+              (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
+                timerChange(ev.target.value as TimerType)
+              )
+            }
+          >
+            <MenuItem value="none">
+              <em>Timer</em>
+            </MenuItem>
+            <MenuItem value="none">none</MenuItem>
+            <MenuItem value="5">5</MenuItem>
+            <MenuItem value="10">10</MenuItem>
+            <MenuItem value="15">15</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
+    </div>
+    <div className="start-game">
+      <PlayButton refTo="/game" buttonName="start" />
+    </div>
   </div>
 );
 

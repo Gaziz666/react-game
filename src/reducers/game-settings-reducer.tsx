@@ -6,13 +6,13 @@ import {
 import { GameSettingsAction } from '../actions/game-settings-action';
 
 const initialState: GameSettingsStateType = {
-  level: 'easy',
-  size: 'small',
+  level: '1',
+  size: '10',
   timer: 'none',
 };
-export type LevelType = 'easy' | 'normal' | 'hard';
+export type LevelType = '1' | '2' | '3';
 
-export type SizeType = 'small' | ' medium' | 'big';
+export type SizeType = '10' | '15' | '20';
 
 export type TimerType = 'none' | '5' | '10' | '15';
 

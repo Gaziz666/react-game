@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import { Link } from 'react-router-dom';
 import { SoundType } from '../../reducers/soundReducer';
 import * as actions from '../../actions/actions';
 import { MusicAction } from '../../actions/actions';
-
 import { AudioOff, AudioOn, Close } from '../icons/Icons';
 import './settings-menu.css';
 
@@ -42,7 +42,11 @@ const SettingsMenu: React.FC<Props> = ({
         <li className="list-item menu-text">Best score</li>
         <li className="list-item menu-text">statistics</li>
         <li className="list-item menu-text">resume</li>
-        <li className="list-item menu-text">new game</li>
+        <li className="list-item menu-text">
+          <Link to="/start" onClick={() => closePopup()}>
+            new game
+          </Link>
+        </li>
       </ul>
     </div>
     <div className="audio-wrapper">
