@@ -40,7 +40,7 @@ const Main: React.FC = () => {
   return (
     <div className="main-container">
       <Router>
-        <Header openPopup={openPopup} />
+        <Header openPopup={openPopup} gameStatus="play" />
         <div className="page-wrapper">
           <Route path="/" component={MainBody} exact />
           <Route path="/start" component={StartPage} />

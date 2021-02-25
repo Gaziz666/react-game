@@ -34,50 +34,70 @@ const SettingsMenu: React.FC<Props> = ({
   musicUnMute,
   sound,
   music,
-}: Props) => (
-  <>
-    <h3 className="menu-text">menu</h3>
-    <div className="list-wrapper">
-      <ul className="list">
-        <li className="list-item menu-text">Best score</li>
-        <li className="list-item menu-text">statistics</li>
-        <li className="list-item menu-text">resume</li>
-        <li className="list-item menu-text">
-          <Link to="/start" onClick={() => closePopup()}>
-            new game
-          </Link>
-        </li>
-      </ul>
-    </div>
-    <div className="audio-wrapper">
-      <div className="audio-button-container">
-        <div className="menu-text margin-bottom">sound</div>
-        <div onClick={() => soundMute()} aria-hidden="true">
-          {sound.mute ? null : <AudioOn width="24px" height="24px" />}
+}: Props) => {
+  const fullScreen = () => {
+    const fullElement = document.querySelector('.app-wrapper');
+    fullElement?.requestFullscreen();
+
+    if (document.fullscreenEnabled) {
+      document
+        .exitFullscreen()
+        .then(() => console.log('Document Exited from Full screen mode'))
+        .catch((err) => console.error(err));
+    }
+  };
+  return (
+    <>
+      <h3 className="menu-text">menu</h3>
+      <div className="list-wrapper">
+        <ul className="list">
+          <li className="list-item menu-text">Best score</li>
+          <li className="list-item menu-text">statistics</li>
+          <li className="list-item menu-text">resume</li>
+          <li
+            className="list-item menu-text"
+            onClick={fullScreen}
+            aria-hidden="true"
+          >
+            full screen
+          </li>
+          <li className="list-item menu-text">
+            <Link to="/start" onClick={() => closePopup()}>
+              new game
+            </Link>
+          </li>
+        </ul>
+      </div>
+      <div className="audio-wrapper">
+        <div className="audio-button-container">
+          <div className="menu-text margin-bottom">sound</div>
+          <div onClick={() => soundMute()} aria-hidden="true">
+            {sound.mute ? null : <AudioOn width="24px" height="24px" />}
+          </div>
+          <div onClick={soundUnMute} aria-hidden="true">
+            {sound.mute ? <AudioOff width="24px" height="24px" /> : null}
+          </div>
         </div>
-        <div onClick={soundUnMute} aria-hidden="true">
-          {sound.mute ? <AudioOff width="24px" height="24px" /> : null}
+        <div className="audio-button-container">
+          <div className="menu-text margin-bottom">music</div>
+          <div onClick={musicMute} aria-hidden="true">
+            {music.mute ? null : <AudioOn width="24px" height="24px" />}
+          </div>
+          <div onClick={musicUnMute} aria-hidden="true">
+            {music.mute ? <AudioOff width="24px" height="24px" /> : null}
+          </div>
         </div>
       </div>
-      <div className="audio-button-container">
-        <div className="menu-text margin-bottom">music</div>
-        <div onClick={musicMute} aria-hidden="true">
-          {music.mute ? null : <AudioOn width="24px" height="24px" />}
-        </div>
-        <div onClick={musicUnMute} aria-hidden="true">
-          {music.mute ? <AudioOff width="24px" height="24px" /> : null}
-        </div>
+      <div
+        className="close-icon-wrapper"
+        onClick={() => closePopup()}
+        aria-hidden="true"
+      >
+        <Close width="30px" height="30px" />
       </div>
-    </div>
-    <div
-      className="close-icon-wrapper"
-      onClick={() => closePopup()}
-      aria-hidden="true"
-    >
-      <Close width="30px" height="30px" />
-    </div>
-  </>
-);
+    </>
+  );
+};
 
 type soundState = {
   sounds: SoundType;

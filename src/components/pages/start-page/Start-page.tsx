@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import './start-page.css';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import * as actions from '../../../actions/game-settings-action';
@@ -30,10 +29,9 @@ const StartPage: React.FC<Props> = ({
       <h3>Select game settings</h3>
       <div className="select-wrapper">
         <FormControl variant="filled" className="select">
-          <InputLabel id="demo-simple-select-filled-label">Level</InputLabel>
+          <InputLabel htmlFor="filled-age-native-simple">Level</InputLabel>
           <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
+            native
             value={level}
             onChange={
               (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
@@ -41,21 +39,17 @@ const StartPage: React.FC<Props> = ({
               )
             }
           >
-            <MenuItem value="1">
-              <em>Level</em>
-            </MenuItem>
-            <MenuItem value="1">easy</MenuItem>
-            <MenuItem value="2">normal</MenuItem>
-            <MenuItem value="3">hard</MenuItem>
+            <option value="1">easy</option>
+            <option value="2">normal</option>
+            <option value="3">hard</option>
           </Select>
         </FormControl>
       </div>
       <div className="select-wrapper">
         <FormControl variant="filled" className="select">
-          <InputLabel id="demo-simple-select-filled-label">Size</InputLabel>
+          <InputLabel htmlFor="filled-age-native-simple">Size</InputLabel>
           <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
+            native
             value={size}
             onChange={
               (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
@@ -63,21 +57,17 @@ const StartPage: React.FC<Props> = ({
               )
             }
           >
-            <MenuItem value="small">
-              <em>Size</em>
-            </MenuItem>
-            <MenuItem value="10">small</MenuItem>
-            <MenuItem value="15">medium</MenuItem>
-            <MenuItem value="20">big</MenuItem>
+            <option value="10">small</option>
+            <option value="15">medium</option>
+            <option value="20">big</option>
           </Select>
         </FormControl>
       </div>
       <div className="select-wrapper">
         <FormControl variant="filled" className="select">
-          <InputLabel id="demo-simple-select-filled-label">Timer</InputLabel>
+          <InputLabel htmlFor="filled-age-native-simple">Timer</InputLabel>
           <Select
-            labelId="demo-simple-select-filled-label"
-            id="demo-simple-select-filled"
+            native
             value={timer}
             onChange={
               (ev: React.ChangeEvent<{value: unknown}>): GameSettingsAction => (
@@ -85,13 +75,10 @@ const StartPage: React.FC<Props> = ({
               )
             }
           >
-            <MenuItem value="none">
-              <em>Timer</em>
-            </MenuItem>
-            <MenuItem value="none">none</MenuItem>
-            <MenuItem value="5">5</MenuItem>
-            <MenuItem value="10">10</MenuItem>
-            <MenuItem value="15">15</MenuItem>
+            <option value="none">none</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
           </Select>
         </FormControl>
       </div>

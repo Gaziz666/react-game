@@ -1,4 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { GameStatusStateType } from '../../reducers/game-status-reducer';
+import { RootStateType } from '../../reducers/rootReducer';
 import MenuButton from '../menu-button/Menu-button';
 import './header.css';
 
@@ -7,16 +10,24 @@ type HeaderProps = {
   openPopup: (type: string) => void;
 };
 
-const Header: React.FC<HeaderProps> = (props: HeaderProps) => {
+type Props = GameStatusStateType & HeaderProps;
+
+const Header: React.FC<Props> = ({ gameStatus, openPopup }: Props) => {
   const about = 'About';
   const settings = 'Menu';
+  console.log(gameStatus);
   return (
     <header className="header">
-      <MenuButton value={about} click={() => props.openPopup(about)} />
-      <div className="flag" />
-      <MenuButton value={settings} click={() => props.openPopup(settings)} />
+      <MenuButton value={about} click={() => openPopup(about)} />
+      {gameStatus === 'play' ? <div className="flag" /> : null}
+      {gameStatus === 'lose' ? <div className="lose">lose</div> : null}
+      <MenuButton value={settings} click={() => openPopup(settings)} />
     </header>
   );
 };
 
-export default Header;
+const mapStateToProps = (state: RootStateType) => ({
+  ...state.gameStatus,
+});
+
+export default connect(mapStateToProps, null)(Header);

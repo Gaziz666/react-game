@@ -1,16 +1,21 @@
 import { GameSettingsStateType } from '../reducers/game-settings-reducer';
 
+type Row = typeof gameRow;
+type Element = {
+  x: number;
+  y: number;
+  back: number;
+  flag: boolean;
+  open: boolean;
+};
+export type GameArrType = typeof gameArr;
+
+let gameRow: Array<Element> = [];
+let gameArr: Array<Row> = [];
+
 const createGame = ({ level, size, timer }: GameSettingsStateType) => {
+  gameArr = [];
   console.log(level, size, timer);
-  type Element = {
-    x: number;
-    y: number;
-  };
-
-  type Row = typeof gameRow;
-
-  let gameRow: Array<Element> = [];
-  const gameArr: Array<Row> = [];
 
   const gameArrWithBomb: Array<Array<number>> = [];
   const row: Array<number> = [];
@@ -90,13 +95,21 @@ const createGame = ({ level, size, timer }: GameSettingsStateType) => {
 
   for (let i = 0; i < Number(size); i += 1) {
     for (let j = 0; j < Number(size); j += 1) {
-      if (gameArrWithBomb) gameRow.push({ x: i, y: j });
+      if (gameArrWithBomb) {
+        gameRow.push({
+          x: i,
+          y: j,
+          back: gameArrWithBomb[i][j],
+          flag: false,
+          open: false,
+        });
+      }
     }
-    gameArr.push(gameRow);
+    gameArr.push([...gameRow]);
     gameRow = [];
   }
 
-  return { gameArr, gameArrWithBomb };
+  return { gameArr };
 };
 
 export default createGame;

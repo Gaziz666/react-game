@@ -1,6 +1,111 @@
-.token {
+.token-10 {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+}
+
+.token-15 {
   width: 33px;
   height: 33px;
-  background-image: url('../../assets/img/token.svg');
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.token-20 {
+  width: 25px;
+  height: 25px;
+}
+
+.button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  border-radius: 3px;
+  background: linear-gradient(rgb(182, 130, 212), rgb(182, 130, 212))
+    rgb(117, 73, 168);
+  box-shadow: 0 1px rgba(255, 255, 255, 0.2) inset, 0 3px 5px rgba(0, 1, 6, 0.5),
+    0 0 1px 1px rgba(0, 1, 6, 0.2);
+  transition: 0.1s ease-in-out;
+}
+
+.button:active {
+  top: 1px;
+  background: linear-gradient(rgb(126, 99, 148), rgb(182, 130, 212))
+    rgb(117, 73, 168);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0.5) inset,
+    0 2px 3px rgba(0, 0, 0, 0.5) inset, 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+.open-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  outline: none;
+  border-radius: 3px;
+  background: linear-gradient(rgb(212, 165, 238), rgb(215, 157, 248))
+    rgb(117, 73, 168);
+  transition: 0.2s ease-in-out;
+  font-weight: 600;
+}
+
+.open1 {
+  color: rgb(41, 0, 153);
+  cursor: default;
+}
+
+.open2 {
+  color: rgb(0, 83, 0);
+  cursor: default;
+}
+
+.open3 {
+  color: rgb(163, 20, 16);
+  cursor: default;
+}
+
+.open4 {
+  color: rgb(14, 0, 66);
+  cursor: default;
+}
+
+.open5 {
+  color: rgb(66, 0, 41);
+  cursor: default;
+}
+
+.open6 {
+  color: rgb(0, 255, 76);
+  cursor: default;
+}
+
+.open7 {
+  color: rgb(126, 139, 3);
+  cursor: default;
+}
+
+.open8 {
+  color: rgb(2, 0, 5);
+  cursor: default;
+}
+
+.bomb {
+  background-image: url('../../assets/img/bombRed.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  display: inline-table;
+}
+
+.flag-click {
+  background-image: url('../../assets/img/flag.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  display: inline-table;
 }
