@@ -19,7 +19,7 @@ export type TimerType = 'none' | '5' | '10' | '15';
 export type GameSettingsStateType = {
   level: LevelType;
   size: SizeType;
-  timer: TimerType;
+  timer?: TimerType;
 };
 
 const gameSettingsReducer = (

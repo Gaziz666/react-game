@@ -1,10 +1,14 @@
-import { GAME_STATUS_CHANGE } from './action-constant';
+import { GAME_STATUS_CHANGE, GAME_TOKEN_CLICK } from './action-constant';
 
 const gameStatusChange = (value: string) => ({
   type: GAME_STATUS_CHANGE,
   payload: value,
 });
 
-export { gameStatusChange };
+const gameOpenCountInc = () => ({
+  type: GAME_TOKEN_CLICK,
+});
 
-export type GameStatusActionType = { type: string; payload: string };
+export { gameStatusChange, gameOpenCountInc };
+
+export type GameStatusActionType = { type: string; payload?: string };

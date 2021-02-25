@@ -10,10 +10,13 @@ import {
   GameStatusStateType,
   GameStatusType,
 } from '../../reducers/game-status-reducer';
+import { GAME_STATUS } from '../../utils/gameConstant';
+import openZeroToken from './openZeroToken';
+import { GameSettingsStateType } from '../../reducers/game-settings-reducer';
 
 type OwnProps = {
-  dataX: number;
-  dataY: number;
+  x: number;
+  y: number;
   size: string;
 };
 
@@ -24,83 +27,117 @@ type MapDispatchToPropsType = {
     // eslint-disable-next-line no-unused-vars
     value: GameStatusType,
   ) => statusAction.GameStatusActionType;
+  gameOpenCountInc: () => statusAction.GameStatusActionType;
 };
 
 type Props = GameTableStateType &
   GameStatusStateType &
   MapDispatchToPropsType &
+  GameSettingsStateType &
   OwnProps;
 
 const Token: React.FC<Props> = ({
   gameStartArr,
   gameStatus,
+  openCount,
   gameStatusChange,
   gameStart,
-  dataX,
-  dataY,
+  gameOpenCountInc,
+  x,
+  y,
   size,
+  level,
 }: Props) => {
-  const tokenHandleClick = (event: React.MouseEvent) => {
-    if (!(event.target as HTMLElement).classList.contains('button')) {
+  const tokenHandleClick = () => {
+    // prettier-ignore
+    if (
+      gameStatus === GAME_STATUS.lose
+      || gameStatus === GAME_STATUS.win
+      || gameStartArr[x][y].flag
+      || gameStartArr[x][y].open
+    ) {
       return;
     }
 
-    const currentElement = event.target as HTMLElement;
-    const x = Number(currentElement.dataset.x);
-    const y = Number(currentElement.dataset.y);
-    const currentToken = gameStartArr[x][y];
-
-    if (currentToken.flag) {
-      return;
-    }
-
-    currentElement.classList.remove('button');
-    currentElement.classList.add('open-button');
-
-    if (currentToken.back === 10) {
-      currentElement.innerHTML = '<div class="bomb"></div>';
-      gameStatusChange('lose');
-      console.log('gamestatus', gameStatus);
-    } else if (currentToken.back !== 0) {
-      currentElement.innerHTML = `<span class="open${currentToken.back}">${currentToken.back}</span>`;
+    if (gameStartArr[x][y].back === 10) {
+      gameStatusChange(GAME_STATUS.lose);
     }
 
     const newStateArr = [...gameStartArr];
+    let clickCount = 0;
     newStateArr[x][y].open = true;
+
+    if (gameStartArr[x][y].back === 0) {
+      openZeroToken(newStateArr, x, y, Number(size));
+    }
+
+    gameOpenCountInc();
+    console.log(level, openCount, clickCount);
+
     gameStart(newStateArr);
+
+    newStateArr.forEach((itemArr) => {
+      itemArr.forEach((item) => {
+        if (item.open) {
+          clickCount += 1;
+        }
+      });
+    });
+
+    const totalSize = Number(size) * Number(size);
+    const bombCount = Number(size) * Number(level);
+    if (totalSize - bombCount === clickCount) {
+      gameStatusChange(GAME_STATUS.win);
+    }
+    console.log(level, openCount, clickCount);
   };
 
   const flagHandleClick = (event: React.MouseEvent) => {
     event.preventDefault();
-    const currentElement = (event.target as HTMLElement).closest(
-      '.button',
-    ) as HTMLElement;
 
-    if (!currentElement) {
+    if (
+      // prettier-ignore
+      gameStartArr[x][y].open
+      || gameStatus === GAME_STATUS.lose
+      || gameStatus === GAME_STATUS.win
+    ) {
       return;
     }
 
-    const x = Number(currentElement.dataset.x);
-    const y = Number(currentElement.dataset.y);
     const newStateArr = [...gameStartArr];
-
-    currentElement.innerHTML = newStateArr[x][y].flag
-      ? ''
-      : '<div class="flag-click"></div>';
 
     newStateArr[x][y].flag = !newStateArr[x][y].flag;
     gameStart(newStateArr);
   };
 
+  const innerElement = () => {
+    if (gameStartArr[x][y].back === 10) {
+      return <div className="bomb" />;
+    }
+    if (gameStartArr[x][y].back !== 0) {
+      return (
+        <span className={`open${gameStartArr[x][y].back}`}>
+          {gameStartArr[x][y].back}
+        </span>
+      );
+    }
+    return null;
+  };
+
   return (
     <div
-      className={`button token-${size}`}
-      data-x={dataX}
-      data-y={dataY}
+      className={
+        gameStartArr[x][y].open
+          ? `open-button token-${size}`
+          : `button token-${size}`
+      }
       aria-hidden="true"
-      onClick={(event) => tokenHandleClick(event)}
+      onClick={() => tokenHandleClick()}
       onContextMenu={(event) => flagHandleClick(event)}
-    />
+    >
+      {gameStartArr[x][y].open ? innerElement() : null}
+      {gameStartArr[x][y].flag ? <div className="flag-click" /> : null}
+    </div>
   );
 };
 
@@ -109,6 +146,7 @@ const actions = { ...tableActions, ...statusAction };
 const mapStateToProps = (state: RootStateType) => ({
   ...state.gameTable,
   ...state.gameStatus,
+  ...state.gameSet,
 });
 
 export default connect(mapStateToProps, actions)(Token);

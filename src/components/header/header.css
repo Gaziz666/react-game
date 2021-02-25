@@ -22,3 +22,13 @@
   color: #fc0000;
   text-align: center;
 }
+
+.win {
+  width: 127px;
+  height: 53px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 35px;
+  color: #f8fc00;
+  text-align: center;
+}

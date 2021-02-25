@@ -43,10 +43,9 @@ const GamePage: React.FC<Props> = ({
     const key = index + 1;
     return (
       <Token
-        dataX={item.x}
-        dataY={item.y}
+        x={item.x}
+        y={item.y}
         key={key}
-        size={size}
       />
     );
   });

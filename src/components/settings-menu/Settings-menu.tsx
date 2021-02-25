@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators, Dispatch } from 'redux';
+// import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { SoundType } from '../../reducers/soundReducer';
-import * as actions from '../../actions/actions';
+import * as soundActions from '../../actions/actions';
+import * as statusAction from '../../actions/game-status-action';
 import { MusicAction } from '../../actions/actions';
 import { AudioOff, AudioOn, Close } from '../icons/Icons';
 import './settings-menu.css';
+import { GAME_STATUS } from '../../utils/gameConstant';
 
 type OwnProps = {
   closePopup: () => void;
@@ -22,9 +24,13 @@ type MapDispatchToPropsType = {
   musicMute: () => MusicAction;
   soundUnMute: () => MusicAction;
   musicUnMute: () => MusicAction;
+  // eslint-disable-next-line no-unused-vars
+  gameStatusChange: (value: string) => statusAction.GameStatusActionType;
 };
 
 type Props = OwnProps & MapDispatchToPropsType & MapStateToPropsType;
+
+const actions = { ...statusAction, ...soundActions };
 
 const SettingsMenu: React.FC<Props> = ({
   closePopup,
@@ -32,6 +38,7 @@ const SettingsMenu: React.FC<Props> = ({
   musicMute,
   soundUnMute,
   musicUnMute,
+  gameStatusChange,
   sound,
   music,
 }: Props) => {
@@ -45,6 +52,11 @@ const SettingsMenu: React.FC<Props> = ({
         .then(() => console.log('Document Exited from Full screen mode'))
         .catch((err) => console.error(err));
     }
+  };
+
+  const newGameStart = () => {
+    gameStatusChange(GAME_STATUS.play);
+    closePopup();
   };
   return (
     <>
@@ -62,7 +74,7 @@ const SettingsMenu: React.FC<Props> = ({
             full screen
           </li>
           <li className="list-item menu-text">
-            <Link to="/start" onClick={() => closePopup()}>
+            <Link to="/start" onClick={newGameStart}>
               new game
             </Link>
           </li>
@@ -105,24 +117,24 @@ type soundState = {
 
 const mapStateToProps = ({ sounds }: soundState): MapStateToPropsType => sounds;
 // prettier-ignore
-const mapDispatchToProps = (
-  dispatch: Dispatch<MusicAction>,
-): MapDispatchToPropsType => {
-  const {
-    soundMute,
-    musicMute,
-    soundUnMute,
-    musicUnMute,
-  } = bindActionCreators(
-    actions,
-    dispatch,
-  );
-  return {
-    soundMute,
-    musicMute,
-    soundUnMute,
-    musicUnMute,
-  };
-};
+// const mapDispatchToProps = (
+//   dispatch: Dispatch<MusicAction>,
+// ): MapDispatchToPropsType => {
+//   const {
+//     soundMute,
+//     musicMute,
+//     soundUnMute,
+//     musicUnMute,
+//   } = bindActionCreators(
+//     actions,
+//     dispatch,
+//   );
+//   return {
+//     soundMute,
+//     musicMute,
+//     soundUnMute,
+//     musicUnMute,
+//   };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SettingsMenu);
+export default connect(mapStateToProps, actions)(SettingsMenu);
