@@ -5,6 +5,7 @@ import { RootStateType } from '../../reducers/rootReducer';
 import { GameArrType } from '../../services/createGame';
 import * as tableActions from '../../actions/game-table-actions';
 import * as statusAction from '../../actions/game-status-action';
+import * as countAction from '../../actions/game-count-actions';
 import './token.css';
 import {
   GameStatusStateType,
@@ -13,6 +14,7 @@ import {
 import { GAME_STATUS } from '../../utils/gameConstant';
 import openZeroToken from './openZeroToken';
 import { GameSettingsStateType } from '../../reducers/game-settings-reducer';
+import { GameCountStateType } from '../../reducers/game-count-reducer';
 
 type OwnProps = {
   x: number;
@@ -27,11 +29,16 @@ type MapDispatchToPropsType = {
     // eslint-disable-next-line no-unused-vars
     value: GameStatusType,
   ) => statusAction.GameStatusActionType;
-  gameOpenCountInc: () => statusAction.GameStatusActionType;
+  gameStepCountInc: () => countAction.GameCountActionType;
+  gameBombCountInc: () => countAction.GameCountActionType;
+  gameBombCountDec: () => countAction.GameCountActionType;
+  // eslint-disable-next-line no-unused-vars
+  gameBombStartCount: (value: number) => statusAction.GameStatusActionType;
 };
 
 type Props = GameTableStateType &
   GameStatusStateType &
+  GameCountStateType &
   MapDispatchToPropsType &
   GameSettingsStateType &
   OwnProps;
@@ -39,10 +46,12 @@ type Props = GameTableStateType &
 const Token: React.FC<Props> = ({
   gameStartArr,
   gameStatus,
-  openCount,
   gameStatusChange,
   gameStart,
-  gameOpenCountInc,
+  gameStepCountInc,
+  gameBombCountInc,
+  gameBombCountDec,
+  gameBombStartCount,
   x,
   y,
   size,
@@ -68,12 +77,10 @@ const Token: React.FC<Props> = ({
     newStateArr[x][y].open = true;
 
     if (gameStartArr[x][y].back === 0) {
-      openZeroToken(newStateArr, x, y, Number(size));
+      openZeroToken(newStateArr, x, y, Number(size), gameBombCountInc);
     }
 
-    gameOpenCountInc();
-    console.log(level, openCount, clickCount);
-
+    gameStepCountInc();
     gameStart(newStateArr);
 
     newStateArr.forEach((itemArr) => {
@@ -85,11 +92,19 @@ const Token: React.FC<Props> = ({
     });
 
     const totalSize = Number(size) * Number(size);
-    const bombCount = Number(size) * Number(level);
-    if (totalSize - bombCount === clickCount) {
+    const bombCountTotal = Number(size) * Number(level);
+
+    if (totalSize - bombCountTotal === clickCount) {
       gameStatusChange(GAME_STATUS.win);
+      gameBombStartCount(0);
+      // prettier-ignore
+      gameStart(newStateArr.map((itemArr) => itemArr.map((item) => {
+        if (!item.open) {
+          return { ...item, flag: true };
+        }
+        return item;
+      })));
     }
-    console.log(level, openCount, clickCount);
   };
 
   const flagHandleClick = (event: React.MouseEvent) => {
@@ -105,8 +120,14 @@ const Token: React.FC<Props> = ({
     }
 
     const newStateArr = [...gameStartArr];
-
     newStateArr[x][y].flag = !newStateArr[x][y].flag;
+
+    if (newStateArr[x][y].flag) {
+      gameBombCountDec();
+    } else {
+      gameBombCountInc();
+    }
+
     gameStart(newStateArr);
   };
 
@@ -141,12 +162,13 @@ const Token: React.FC<Props> = ({
   );
 };
 
-const actions = { ...tableActions, ...statusAction };
+const actions = { ...tableActions, ...statusAction, ...countAction };
 
 const mapStateToProps = (state: RootStateType) => ({
   ...state.gameTable,
   ...state.gameStatus,
   ...state.gameSet,
+  ...state.gameCount,
 });
 
 export default connect(mapStateToProps, actions)(Token);

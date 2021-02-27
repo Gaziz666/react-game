@@ -13,9 +13,8 @@ export type GameArrType = typeof gameArr;
 let gameRow: Array<Element> = [];
 let gameArr: Array<Row> = [];
 
-const createGame = ({ level, size, timer }: GameSettingsStateType) => {
+const createGame = ({ level, size }: GameSettingsStateType) => {
   gameArr = [];
-  console.log(level, size, timer);
 
   const gameArrWithBomb: Array<Array<number>> = [];
   const row: Array<number> = [];

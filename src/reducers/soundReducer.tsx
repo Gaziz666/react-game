@@ -6,31 +6,38 @@ import {
 } from '../actions/action-constant';
 import { MusicAction } from '../actions/actions';
 
+export type SoundType = {
+  sounds?: { mute: boolean };
+  music?: { mute: boolean };
+  musicAudio?: HTMLAudioElement;
+};
+
 const initialState = {
-  sound: { mute: false as boolean },
-  music: { mute: false as boolean },
+  sounds: { mute: false as boolean },
+  music: { mute: true as boolean },
+  musicAudio: new Audio('../assets/audio/music.mp3'),
 };
 
 const soundReducer = (state: SoundType = initialState, action: MusicAction) => {
   switch (action.type) {
     case SOUND_MUTE:
       return {
-        sound: { ...state.sound, mute: true },
+        sounds: { ...state.sounds, mute: true },
         music: { ...state.music },
       };
     case SOUND_UNMUTE:
       return {
-        sound: { ...state.sound, mute: false },
+        sounds: { ...state.sounds, mute: false },
         music: { ...state.music },
       };
     case MUSIC_MUTE:
       return {
-        sound: { ...state.sound },
+        sounds: { ...state.sounds },
         music: { ...state.music, mute: true },
       };
     case MUSIC_UNMUTE:
       return {
-        sound: { ...state.sound },
+        sounds: { ...state.sounds },
         music: { ...state.music, mute: false },
       };
     default:
@@ -39,5 +46,3 @@ const soundReducer = (state: SoundType = initialState, action: MusicAction) => {
 };
 
 export { soundReducer };
-
-export type SoundType = typeof initialState;

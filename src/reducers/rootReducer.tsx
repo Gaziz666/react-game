@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import gameCountReducer, { GameCountStateType } from './game-count-reducer';
 import gameSettingsReducer, {
   GameSettingsStateType,
 } from './game-settings-reducer';
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   gameSet: gameSettingsReducer,
   gameTable: gameTableReducer,
   gameStatus: gameStatusReducer,
+  gameCount: gameCountReducer,
 });
 
 export default rootReducer;
@@ -20,4 +22,5 @@ export type RootStateType = {
   gameSet: GameSettingsStateType;
   gameTable: GameTableStateType;
   gameStatus: GameStatusStateType;
+  gameCount: GameCountStateType;
 };

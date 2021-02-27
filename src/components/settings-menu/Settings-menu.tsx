@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators, Dispatch } from 'redux';
 import { Link } from 'react-router-dom';
 import { SoundType } from '../../reducers/soundReducer';
 import * as soundActions from '../../actions/actions';
@@ -9,14 +8,11 @@ import { MusicAction } from '../../actions/actions';
 import { AudioOff, AudioOn, Close } from '../icons/Icons';
 import './settings-menu.css';
 import { GAME_STATUS } from '../../utils/gameConstant';
+import { RootStateType } from '../../reducers/rootReducer';
+import musicUrl from '../../assets/audio/music.mp3';
 
 type OwnProps = {
   closePopup: () => void;
-};
-
-type MapStateToPropsType = {
-  sound: { mute: boolean };
-  music: { mute: boolean };
 };
 
 type MapDispatchToPropsType = {
@@ -28,9 +24,12 @@ type MapDispatchToPropsType = {
   gameStatusChange: (value: string) => statusAction.GameStatusActionType;
 };
 
-type Props = OwnProps & MapDispatchToPropsType & MapStateToPropsType;
+type Props = OwnProps & MapDispatchToPropsType & SoundType;
 
 const actions = { ...statusAction, ...soundActions };
+
+const audioMusic = new Audio(musicUrl);
+audioMusic.loop = true;
 
 const SettingsMenu: React.FC<Props> = ({
   closePopup,
@@ -39,7 +38,7 @@ const SettingsMenu: React.FC<Props> = ({
   soundUnMute,
   musicUnMute,
   gameStatusChange,
-  sound,
+  sounds,
   music,
 }: Props) => {
   const fullScreen = () => {
@@ -54,10 +53,20 @@ const SettingsMenu: React.FC<Props> = ({
     }
   };
 
+  useEffect(() => {
+    if (music?.mute) {
+      audioMusic.pause();
+    } else {
+      audioMusic.play();
+    }
+    return () => audioMusic.pause();
+  }, [music]);
+
   const newGameStart = () => {
     gameStatusChange(GAME_STATUS.play);
     closePopup();
   };
+
   return (
     <>
       <h3 className="menu-text">menu</h3>
@@ -84,19 +93,19 @@ const SettingsMenu: React.FC<Props> = ({
         <div className="audio-button-container">
           <div className="menu-text margin-bottom">sound</div>
           <div onClick={() => soundMute()} aria-hidden="true">
-            {sound.mute ? null : <AudioOn width="24px" height="24px" />}
+            {sounds!.mute ? null : <AudioOn width="24px" height="24px" />}
           </div>
           <div onClick={soundUnMute} aria-hidden="true">
-            {sound.mute ? <AudioOff width="24px" height="24px" /> : null}
+            {sounds!.mute ? <AudioOff width="24px" height="24px" /> : null}
           </div>
         </div>
         <div className="audio-button-container">
           <div className="menu-text margin-bottom">music</div>
           <div onClick={musicMute} aria-hidden="true">
-            {music.mute ? null : <AudioOn width="24px" height="24px" />}
+            {music!.mute ? null : <AudioOn width="24px" height="24px" />}
           </div>
           <div onClick={musicUnMute} aria-hidden="true">
-            {music.mute ? <AudioOff width="24px" height="24px" /> : null}
+            {music!.mute ? <AudioOff width="24px" height="24px" /> : null}
           </div>
         </div>
       </div>
@@ -111,30 +120,6 @@ const SettingsMenu: React.FC<Props> = ({
   );
 };
 
-type soundState = {
-  sounds: SoundType;
-};
-
-const mapStateToProps = ({ sounds }: soundState): MapStateToPropsType => sounds;
-// prettier-ignore
-// const mapDispatchToProps = (
-//   dispatch: Dispatch<MusicAction>,
-// ): MapDispatchToPropsType => {
-//   const {
-//     soundMute,
-//     musicMute,
-//     soundUnMute,
-//     musicUnMute,
-//   } = bindActionCreators(
-//     actions,
-//     dispatch,
-//   );
-//   return {
-//     soundMute,
-//     musicMute,
-//     soundUnMute,
-//     musicUnMute,
-//   };
-// };
+const mapStateToProps = (state: RootStateType) => ({ ...state.sounds });
 
 export default connect(mapStateToProps, actions)(SettingsMenu);

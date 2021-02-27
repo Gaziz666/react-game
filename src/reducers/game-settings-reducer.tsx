@@ -14,7 +14,7 @@ export type LevelType = '1' | '2' | '3';
 
 export type SizeType = '10' | '15' | '20';
 
-export type TimerType = 'none' | '5' | '10' | '15';
+export type TimerType = 'none' | '1' | '3' | '5';
 
 export type GameSettingsStateType = {
   level: LevelType;
