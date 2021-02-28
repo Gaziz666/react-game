@@ -8,6 +8,7 @@ import Header from '../header/Header';
 import './main.css';
 import StartPage from '../pages/start-page/Start-page';
 import GamePage from '../pages/game-page/game-page';
+import Statistic from '../statistic/Statistic';
 
 const Main: React.FC = () => {
   const [about, setAbout] = useState({ open: false });
@@ -44,6 +45,7 @@ const Main: React.FC = () => {
           <Route path="/react-game" component={MainBody} exact />
           <Route path="/start" component={StartPage} />
           <Route path="/game" component={GamePage} />
+          <Route path="/statistic" component={Statistic} />
         </div>
 
         {about.open ? <Popup closePopup={closeAbout} type="about" /> : null}

@@ -59,7 +59,6 @@ const SettingsMenu: React.FC<Props> = ({
     } else {
       audioMusic.play();
     }
-    return () => audioMusic.pause();
   }, [music]);
 
   const newGameStart = () => {
@@ -73,7 +72,9 @@ const SettingsMenu: React.FC<Props> = ({
       <div className="list-wrapper">
         <ul className="list">
           <li className="list-item menu-text">Best score</li>
-          <li className="list-item menu-text">statistics</li>
+          <li className="list-item menu-text">
+            <Link to="/statistic">statistics</Link>
+          </li>
           <li className="list-item menu-text">resume</li>
           <li
             className="list-item menu-text"

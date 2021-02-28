@@ -1,5 +1,5 @@
 import { GameStatusActionType } from '../../actions/game-status-action';
-import { GameArrType } from '../../services/createGame';
+import { GameArrType } from '../pages/start-page/createGame';
 
 const openZeroToken = (
   stateArr: GameArrType,

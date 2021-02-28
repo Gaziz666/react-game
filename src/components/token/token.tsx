@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { GameTableStateType } from '../../reducers/game-table-reducer';
 import { RootStateType } from '../../reducers/rootReducer';
-import { GameArrType } from '../../services/createGame';
+import { GameArrType } from '../pages/start-page/createGame';
 import * as tableActions from '../../actions/game-table-actions';
 import * as statusAction from '../../actions/game-status-action';
 import * as countAction from '../../actions/game-count-actions';
@@ -15,6 +15,10 @@ import { GAME_STATUS } from '../../utils/gameConstant';
 import openZeroToken from './openZeroToken';
 import { GameSettingsStateType } from '../../reducers/game-settings-reducer';
 import { GameCountStateType } from '../../reducers/game-count-reducer';
+import { SoundType } from '../../reducers/soundReducer';
+import bombUrl from '../../assets/audio/bomb.mp3';
+import winUrl from '../../assets/audio/win.mp3';
+import clickUrl from '../../assets/audio/click.mp3';
 
 type OwnProps = {
   x: number;
@@ -39,13 +43,19 @@ type MapDispatchToPropsType = {
 type Props = GameTableStateType &
   GameStatusStateType &
   GameCountStateType &
+  SoundType &
   MapDispatchToPropsType &
   GameSettingsStateType &
   OwnProps;
 
+const clickAudio = new Audio(clickUrl);
+const winAudio = new Audio(winUrl);
+const loseAudio = new Audio(bombUrl);
+
 const Token: React.FC<Props> = ({
   gameStartArr,
   gameStatus,
+  sounds,
   gameStatusChange,
   gameStart,
   gameStepCountInc,
@@ -68,8 +78,15 @@ const Token: React.FC<Props> = ({
       return;
     }
 
+    if (!sounds?.mute) {
+      clickAudio.play();
+    }
+
     if (gameStartArr[x][y].back === 10) {
       gameStatusChange(GAME_STATUS.lose);
+      if (!sounds?.mute) {
+        loseAudio.play();
+      }
     }
 
     const newStateArr = [...gameStartArr];
@@ -95,6 +112,9 @@ const Token: React.FC<Props> = ({
     const bombCountTotal = Number(size) * Number(level);
 
     if (totalSize - bombCountTotal === clickCount) {
+      if (!sounds?.mute) {
+        winAudio.play();
+      }
       gameStatusChange(GAME_STATUS.win);
       gameBombStartCount(0);
       // prettier-ignore
@@ -169,6 +189,7 @@ const mapStateToProps = (state: RootStateType) => ({
   ...state.gameStatus,
   ...state.gameSet,
   ...state.gameCount,
+  ...state.sounds,
 });
 
 export default connect(mapStateToProps, actions)(Token);

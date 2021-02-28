@@ -1,6 +1,6 @@
 import { GAME_START } from '../actions/action-constant';
 import { GameTableType } from '../actions/game-table-actions';
-import { GameArrType } from '../services/createGame';
+import { GameArrType } from '../components/pages/start-page/createGame';
 // prettier-ignore
 const initialState = {
   gameStartArr: [

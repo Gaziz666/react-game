@@ -1,4 +1,4 @@
-import { GameSettingsStateType } from '../reducers/game-settings-reducer';
+import { GameSettingsStateType } from '../../../reducers/game-settings-reducer';
 
 type Row = typeof gameRow;
 type Element = {
@@ -29,8 +29,8 @@ const createGame = ({ level, size }: GameSettingsStateType) => {
   }
 
   for (let i = 0; i < bombNumber; i += 1) {
-    const bombX = Math.floor(Math.random() * 10);
-    const bombY = Math.floor(Math.random() * 10);
+    const bombX = Math.floor(Math.random() * Number(size));
+    const bombY = Math.floor(Math.random() * Number(size));
 
     if (gameArrWithBomb[bombX][bombY] === 0) {
       gameArrWithBomb[bombX][bombY] = 10;

@@ -1,4 +1,4 @@
-import { GameArrType } from '../services/createGame';
+import { GameArrType } from '../components/pages/start-page/createGame';
 import { GAME_START } from './action-constant';
 
 const gameStart = (value: GameArrType) => ({

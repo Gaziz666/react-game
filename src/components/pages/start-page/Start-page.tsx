@@ -7,6 +7,7 @@ import Select from '@material-ui/core/Select';
 import * as actionsSet from '../../../actions/game-settings-action';
 import * as actionStatus from '../../../actions/game-status-action';
 import * as actionCount from '../../../actions/game-count-actions';
+import * as actionTable from '../../../actions/game-table-actions';
 import {
   GameSettingsStateType,
   LevelType,
@@ -16,6 +17,7 @@ import {
 import { GameSettingsAction } from '../../../actions/game-settings-action';
 import { RootStateType } from '../../../reducers/rootReducer';
 import PlayButton from '../../play-button/play-button';
+import createGame, { GameArrType } from './createGame';
 
 type MapDispatchToPropsType = {
   // eslint-disable-next-line no-unused-vars
@@ -30,6 +32,8 @@ type MapDispatchToPropsType = {
   gameStopWatchStart: () => actionCount.GameCountActionType;
   // eslint-disable-next-line no-unused-vars
   gameTimerStart: (value: number) => actionCount.GameCountActionType;
+  // eslint-disable-next-line no-unused-vars
+  gameStart: (value: GameArrType) => actionTable.GameTableType;
 };
 
 type Props = GameSettingsStateType & MapDispatchToPropsType;
@@ -46,12 +50,15 @@ const StartPage: React.FC<Props> = ({
   gameStepCountStart,
   gameStopWatchStart,
   gameTimerStart,
+  gameStart,
 }: Props) => {
   const handleStartGame = (): void => {
     gameBombStartCount(Number(level) * Number(size));
     gameStepCountStart();
     gameStopWatchStart();
     gameTimerStart(Number(timer));
+    const { gameArr } = createGame({ level, size, timer });
+    gameStart(gameArr);
   };
 
   return (
@@ -121,7 +128,12 @@ const StartPage: React.FC<Props> = ({
   );
 };
 
-const actions = { ...actionStatus, ...actionsSet, ...actionCount };
+const actions = {
+  ...actionStatus,
+  ...actionsSet,
+  ...actionCount,
+  ...actionTable,
+};
 
 const mapStateToProps = (state: RootStateType) => ({ ...state.gameSet });
 

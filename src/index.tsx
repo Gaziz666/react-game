@@ -6,7 +6,11 @@ import rootReducer from './reducers/rootReducer';
 import './index.css';
 import App from './components/app/App';
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer, JSON.parse(localStorage['redux-store']));
+
+store.subscribe(() => {
+  localStorage['redux-store'] = JSON.stringify(store.getState());
+});
 
 ReactDOM.render(
   <React.StrictMode>
