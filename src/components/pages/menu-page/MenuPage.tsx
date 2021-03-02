@@ -94,7 +94,7 @@ const MenuPage: React.FC<Props> = ({
     }
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.code === 'KeyM') {
-        history.push('/react-game');
+        history.push('/');
       } else if (event.code === 'KeyS') {
         history.push('/statistic');
       } else if (event.code === 'KeyF') {
@@ -116,7 +116,7 @@ const MenuPage: React.FC<Props> = ({
         <div className="list-wrapper">
           <ul className="list">
             <li className="list-item menu-text">
-              <Link to="/react-game">main</Link>
+              <Link to="/">main</Link>
             </li>
             <li className="list-item menu-text">
               <Link to="/statistic">statistics</Link>

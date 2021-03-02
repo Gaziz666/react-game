@@ -12,10 +12,10 @@ import MenuPage from '../pages/menu-page/MenuPage';
 
 const Main: React.FC = () => (
   <div className="main-container">
-    <Router>
+    <Router basename="/react-game">
       <Header gameStatus="play" />
       <div className="page-wrapper">
-        <Route path="/react-game" component={MainBody} exact />
+        <Route path="/" component={MainBody} exact />
         <Route path="/start" component={StartPage} />
         <Route path="/game" component={GamePage} />
         <Route path="/statistic" component={Statistic} />
