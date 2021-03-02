@@ -122,11 +122,7 @@ const StartPage: React.FC<Props> = ({
           </FormControl>
         </div>
       </div>
-      <div
-        className="start-game"
-        onClick={() => handleStartGame()}
-        aria-hidden="true"
-      >
+      <div onClick={() => handleStartGame()} aria-hidden="true">
         <PlayButton refTo="/game" buttonName="start" />
       </div>
     </div>

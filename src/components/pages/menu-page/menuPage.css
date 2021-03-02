@@ -11,7 +11,6 @@
 
 .menu-text {
   text-transform: uppercase;
-  font-style: normal;
   font-weight: 600;
   font-size: 15px;
   line-height: 18px;
@@ -49,4 +48,17 @@
 
 .margin-bottom {
   margin-bottom: 5px;
+}
+
+.list-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.key-item {
+  cursor: default;
+  padding: 8px;
+  font-style: italic;
+  text-transform: none;
 }

@@ -14,8 +14,8 @@ export type SoundType = {
 };
 
 const initialState: SoundType = {
-  sounds: { mute: false, volume: 0.5 },
-  music: { mute: true, volume: 0 },
+  sounds: { mute: false, volume: 1 },
+  music: { mute: true, volume: 0.5 },
 };
 
 const soundReducer = (state: SoundType = initialState, action: MusicAction) => {

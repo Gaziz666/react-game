@@ -26,7 +26,6 @@ const gameStatisticReducer = (
 ) => {
   switch (action.type) {
     case GAME_STATISTIC_ADD:
-      console.log(action.payload, state);
       return { ...state, statistics: action.payload };
     default:
       return state;

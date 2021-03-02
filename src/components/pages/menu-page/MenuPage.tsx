@@ -1,6 +1,11 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import {
+  Link,
+  useHistory,
+  withRouter,
+  RouteComponentProps,
+} from 'react-router-dom';
 import { SoundType } from '../../../reducers/soundReducer';
 import * as soundActions from '../../../actions/actions';
 import * as statusAction from '../../../actions/game-status-action';
@@ -25,7 +30,10 @@ type MapDispatchToPropsType = {
   soundVolumeChange: (value: number) => MusicAction;
 };
 
-type Props = MapDispatchToPropsType & SoundType & GameStatusStateType;
+type Props = MapDispatchToPropsType &
+  SoundType &
+  GameStatusStateType &
+  RouteComponentProps;
 
 const actions = { ...statusAction, ...soundActions };
 
@@ -43,8 +51,9 @@ const MenuPage: React.FC<Props> = ({
   gameStatus,
   sounds,
   music,
+  history,
 }: Props) => {
-  const history = useHistory();
+  const historyIn = useHistory();
   const fullScreen = () => {
     const fullElement = document.querySelector('.app-wrapper');
     fullElement?.requestFullscreen();
@@ -59,7 +68,7 @@ const MenuPage: React.FC<Props> = ({
 
   const goBack = () => {
     checkStatus();
-    history.goBack();
+    historyIn.goBack();
   };
 
   const checkStatus = () => {
@@ -83,37 +92,63 @@ const MenuPage: React.FC<Props> = ({
     if (gameStatus === GAME_STATUS.play) {
       gameStatusChange(GAME_STATUS.pause);
     }
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.code === 'KeyM') {
+        history.push('/react-game');
+      } else if (event.code === 'KeyS') {
+        history.push('/statistic');
+      } else if (event.code === 'KeyF') {
+        fullScreen();
+      } else if (event.code === 'KeyN') {
+        history.push('/start');
+      } else if (event.code === 'KeyR') {
+        history.push('/game');
+      }
+    };
+    document.addEventListener('keypress', handleKeydown);
+    return () => document.removeEventListener('keypress', handleKeydown);
   }, []);
 
   return (
     <div className="menu-container">
       <h3 className="menu-text">menu</h3>
-      <div className="list-wrapper">
-        <ul className="list">
-          <li className="list-item menu-text">
-            <Link to="/react-game">main</Link>
-          </li>
-          <li className="list-item menu-text">
-            <Link to="/statistic">statistics</Link>
-          </li>
-          <li
-            className="list-item menu-text"
-            onClick={checkStatus}
-            aria-hidden="true"
-          >
-            <Link to="/game">resume</Link>
-          </li>
-          <li
-            className="list-item menu-text"
-            onClick={fullScreen}
-            aria-hidden="true"
-          >
-            full screen
-          </li>
-          <li className="list-item menu-text">
-            <Link to="/start">new game</Link>
-          </li>
-        </ul>
+      <div className="list-container">
+        <div className="list-wrapper">
+          <ul className="list">
+            <li className="list-item menu-text">
+              <Link to="/react-game">main</Link>
+            </li>
+            <li className="list-item menu-text">
+              <Link to="/statistic">statistics</Link>
+            </li>
+            <li
+              className="list-item menu-text"
+              onClick={checkStatus}
+              aria-hidden="true"
+            >
+              <Link to="/game">resume</Link>
+            </li>
+            <li
+              className="list-item menu-text"
+              onClick={fullScreen}
+              aria-hidden="true"
+            >
+              full screen
+            </li>
+            <li className="list-item menu-text">
+              <Link to="/start">new game</Link>
+            </li>
+          </ul>
+        </div>
+        <div className="list-wrapper">
+          <ul className="list">
+            <li className="key-item menu-text">key M</li>
+            <li className="key-item menu-text">key S</li>
+            <li className="key-item menu-text">key R</li>
+            <li className="key-item menu-text">key F</li>
+            <li className="key-item menu-text">key N</li>
+          </ul>
+        </div>
       </div>
       <div className="audio-wrapper">
         <div className="audio-button-container">
@@ -174,4 +209,4 @@ const mapStateToProps = (state: RootStateType) => ({
   ...state.gameStatus,
 });
 
-export default connect(mapStateToProps, actions)(MenuPage);
+export default withRouter(connect(mapStateToProps, actions)(MenuPage));
