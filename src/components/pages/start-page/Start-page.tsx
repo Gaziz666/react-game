@@ -18,6 +18,7 @@ import { GameSettingsAction } from '../../../actions/game-settings-action';
 import { RootStateType } from '../../../reducers/rootReducer';
 import PlayButton from '../../play-button/play-button';
 import createGame, { GameArrType } from './createGame';
+import { GAME_STATUS } from '../../../utils/gameConstant';
 
 type MapDispatchToPropsType = {
   // eslint-disable-next-line no-unused-vars
@@ -27,13 +28,15 @@ type MapDispatchToPropsType = {
   // eslint-disable-next-line no-unused-vars
   timerChange: (value: TimerType) => GameSettingsAction;
   // eslint-disable-next-line no-unused-vars
-  gameBombStartCount: (value: number) => actionStatus.GameStatusActionType;
-  gameStepCountStart: () => actionStatus.GameStatusActionType;
+  gameBombStartCount: (value: number) => actionCount.GameCountActionType;
+  gameStepCountStart: () => actionCount.GameCountActionType;
   gameStopWatchStart: () => actionCount.GameCountActionType;
   // eslint-disable-next-line no-unused-vars
   gameTimerStart: (value: number) => actionCount.GameCountActionType;
   // eslint-disable-next-line no-unused-vars
   gameStart: (value: GameArrType) => actionTable.GameTableType;
+  // eslint-disable-next-line no-unused-vars
+  gameStatusChange: (value: string) => actionStatus.GameStatusActionType;
 };
 
 type Props = GameSettingsStateType & MapDispatchToPropsType;
@@ -51,6 +54,7 @@ const StartPage: React.FC<Props> = ({
   gameStopWatchStart,
   gameTimerStart,
   gameStart,
+  gameStatusChange,
 }: Props) => {
   const handleStartGame = (): void => {
     gameBombStartCount(Number(level) * Number(size));
@@ -59,6 +63,7 @@ const StartPage: React.FC<Props> = ({
     gameTimerStart(Number(timer));
     const { gameArr } = createGame({ level, size, timer });
     gameStart(gameArr);
+    gameStatusChange(GAME_STATUS.play);
   };
 
   return (

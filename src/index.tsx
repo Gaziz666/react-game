@@ -6,7 +6,12 @@ import rootReducer from './reducers/rootReducer';
 import './index.css';
 import App from './components/app/App';
 
-const store = createStore(rootReducer, JSON.parse(localStorage['redux-store']));
+const store = createStore(
+  rootReducer,
+  localStorage['redux-store']
+    ? JSON.parse(localStorage['redux-store'])
+    : undefined,
+);
 
 store.subscribe(() => {
   localStorage['redux-store'] = JSON.stringify(store.getState());

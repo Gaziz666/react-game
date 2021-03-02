@@ -4,6 +4,8 @@ import {
   SOUND_UNMUTE,
   MUSIC_UNMUTE,
   MUSIC_AUDIO,
+  SOUND_VOLUME_CHANGE,
+  MUSIC_VOLUME_CHANGE,
 } from './action-constant';
 
 const musicAudio = () => ({
@@ -26,7 +28,25 @@ const musicUnMute = () => ({
   type: MUSIC_UNMUTE,
 });
 
-// eslint-disable-next-line object-curly-newline
-export { soundMute, musicMute, musicUnMute, soundUnMute, musicAudio };
+const musicVolumeChange = (value: number) => ({
+  type: MUSIC_VOLUME_CHANGE,
+  payload: value,
+});
 
-export type MusicAction = { type: string; payload?: string };
+const soundVolumeChange = (value: number) => ({
+  type: SOUND_VOLUME_CHANGE,
+  payload: value,
+});
+
+// eslint-disable-next-line object-curly-newline
+export {
+  soundMute,
+  musicMute,
+  musicUnMute,
+  soundUnMute,
+  musicAudio,
+  musicVolumeChange,
+  soundVolumeChange,
+};
+
+export type MusicAction = { type: string; payload?: number };

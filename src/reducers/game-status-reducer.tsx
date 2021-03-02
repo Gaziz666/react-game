@@ -1,13 +1,13 @@
 import { GAME_STATUS_CHANGE } from '../actions/action-constant';
 import { GameStatusActionType } from '../actions/game-status-action';
 
-export type GameStatusType = 'play' | 'lose' | 'win' | 'start';
+export type GameStatusType = 'play' | 'lose' | 'win' | 'start' | 'pause';
 export type GameStatusStateType = {
   gameStatus?: GameStatusType;
 };
 
 const initialState: GameStatusStateType = {
-  gameStatus: 'play',
+  gameStatus: 'start',
 };
 
 const gameStatusReducer = (

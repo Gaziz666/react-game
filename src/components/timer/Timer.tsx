@@ -35,7 +35,7 @@ const Timer: React.FC<Props> = ({
   gameStatusChange,
 }: Props) => {
   const stopWatchRun = () => {
-    if (stopWatch!.sec < 60) {
+    if (stopWatch!.sec < 59) {
       gameStopWatchSecInc();
     } else {
       gameStopWatchMinInc();
@@ -56,19 +56,18 @@ const Timer: React.FC<Props> = ({
   };
 
   useEffect(() => {
-    const interval = setInterval(stopWatchRun, 1000);
-    const timerInterval = setInterval(timerRun, 1000);
-
-    if (gameStatus === GAME_STATUS.lose || gameStatus === GAME_STATUS.win) {
-      clearInterval(interval!);
-      clearInterval(timerInterval!);
+    let timerInterval = 0;
+    let stopWatchInterval = 0;
+    if (gameStatus === GAME_STATUS.play) {
+      timerInterval = window.setTimeout(stopWatchRun, 1000);
+      stopWatchInterval = window.setTimeout(timerRun, 1000);
     }
 
     return () => {
-      clearInterval(interval!);
-      clearInterval(timerInterval!);
+      clearTimeout(timerInterval);
+      clearTimeout(stopWatchInterval);
     };
-  });
+  }, [gameStatus, stopWatch, timerCounter]);
 
   return (
     <>

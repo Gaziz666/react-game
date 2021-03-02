@@ -4,7 +4,7 @@ import './footer.css';
 const Footer: React.FC = () => (
   <div className="footer">
     <span>Created by: </span>
-    <a className="margin" href="http://" target="_blanc">
+    <a className="margin" href="https://github.com/Gaziz666/" target="_blanc">
       {' '}
       Gaziz Tuleukulov
     </a>

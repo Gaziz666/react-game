@@ -27,3 +27,10 @@ body {
   margin: 0;
   font-family: 'Montserrat';
 }
+
+a:active,
+a:hover,
+a {
+  text-decoration: none;
+  color: inherit;
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { GameTableStateType } from '../../reducers/game-table-reducer';
 import { RootStateType } from '../../reducers/rootReducer';
@@ -6,6 +6,7 @@ import { GameArrType } from '../pages/start-page/createGame';
 import * as tableActions from '../../actions/game-table-actions';
 import * as statusAction from '../../actions/game-status-action';
 import * as countAction from '../../actions/game-count-actions';
+import * as statisticAction from '../../actions/game-statistic-action';
 import './token.css';
 import {
   GameStatusStateType,
@@ -19,6 +20,7 @@ import { SoundType } from '../../reducers/soundReducer';
 import bombUrl from '../../assets/audio/bomb.mp3';
 import winUrl from '../../assets/audio/win.mp3';
 import clickUrl from '../../assets/audio/click.mp3';
+import { GameStatisticStateType } from '../../reducers/game-statistic-reducer';
 
 type OwnProps = {
   x: number;
@@ -46,6 +48,7 @@ type Props = GameTableStateType &
   SoundType &
   MapDispatchToPropsType &
   GameSettingsStateType &
+  GameStatisticStateType &
   OwnProps;
 
 const clickAudio = new Audio(clickUrl);
@@ -56,6 +59,8 @@ const Token: React.FC<Props> = ({
   gameStartArr,
   gameStatus,
   sounds,
+  size,
+  level,
   gameStatusChange,
   gameStart,
   gameStepCountInc,
@@ -64,14 +69,13 @@ const Token: React.FC<Props> = ({
   gameBombStartCount,
   x,
   y,
-  size,
-  level,
 }: Props) => {
   const tokenHandleClick = () => {
     // prettier-ignore
     if (
       gameStatus === GAME_STATUS.lose
       || gameStatus === GAME_STATUS.win
+      || gameStatus === GAME_STATUS.start
       || gameStartArr[x][y].flag
       || gameStartArr[x][y].open
     ) {
@@ -84,6 +88,7 @@ const Token: React.FC<Props> = ({
 
     if (gameStartArr[x][y].back === 10) {
       gameStatusChange(GAME_STATUS.lose);
+
       if (!sounds?.mute) {
         loseAudio.play();
       }
@@ -135,6 +140,7 @@ const Token: React.FC<Props> = ({
       gameStartArr[x][y].open
       || gameStatus === GAME_STATUS.lose
       || gameStatus === GAME_STATUS.win
+      || gameStatus === GAME_STATUS.start
     ) {
       return;
     }
@@ -165,6 +171,12 @@ const Token: React.FC<Props> = ({
     return null;
   };
 
+  useEffect(() => {
+    clickAudio.volume = sounds!.volume;
+    winAudio.volume = sounds!.volume;
+    loseAudio.volume = sounds!.volume;
+  }, [sounds]);
+
   return (
     <div
       className={
@@ -182,7 +194,12 @@ const Token: React.FC<Props> = ({
   );
 };
 
-const actions = { ...tableActions, ...statusAction, ...countAction };
+const actions = {
+  ...tableActions,
+  ...statusAction,
+  ...countAction,
+  ...statisticAction,
+};
 
 const mapStateToProps = (state: RootStateType) => ({
   ...state.gameTable,
@@ -190,6 +207,7 @@ const mapStateToProps = (state: RootStateType) => ({
   ...state.gameSet,
   ...state.gameCount,
   ...state.sounds,
+  ...state.gameStat,
 });
 
 export default connect(mapStateToProps, actions)(Token);
