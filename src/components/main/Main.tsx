@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 import MainBody from '../pages/main-page/main-body/Main-body';
+
 import Footer from '../footer/Footer';
 import Header from '../header/Header';
 import './main.css';
@@ -15,7 +16,7 @@ const Main: React.FC = () => (
     <Router basename="/react-game">
       <Header gameStatus="play" />
       <div className="page-wrapper">
-        <Route path="/" component={MainBody} exact />
+        <Route path="/react-game" component={MainBody} exact />
         <Route path="/start" component={StartPage} />
         <Route path="/game" component={GamePage} />
         <Route path="/statistic" component={Statistic} />
