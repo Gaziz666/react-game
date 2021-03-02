@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/react-game/static/css/main.70a67c6e.chunk.css",
+    "main.js": "/react-game/static/js/main.064521d5.chunk.js",
+    "main.js.map": "/react-game/static/js/main.064521d5.chunk.js.map",
+    "runtime-main.js": "/react-game/static/js/runtime-main.a8de5e2f.js",
+    "runtime-main.js.map": "/react-game/static/js/runtime-main.a8de5e2f.js.map",
+    "static/js/2.de8d8dae.chunk.js": "/react-game/static/js/2.de8d8dae.chunk.js",
+    "static/js/2.de8d8dae.chunk.js.map": "/react-game/static/js/2.de8d8dae.chunk.js.map",
+    "index.html": "/react-game/index.html",
+    "static/css/main.70a67c6e.chunk.css.map": "/react-game/static/css/main.70a67c6e.chunk.css.map",
+    "static/js/2.de8d8dae.chunk.js.LICENSE.txt": "/react-game/static/js/2.de8d8dae.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/react-game/static/media/Montserrat-SemiBold.fa8441f3.ttf",
+    "static/media/main.css": "/react-game/static/media/background.de551943.png",
+    "static/media/bomb.be7d8658.mp3": "/react-game/static/media/bomb.be7d8658.mp3",
+    "static/media/token.css": "/react-game/static/media/flag.b5dd17f5.svg",
+    "static/media/click.400e8b56.mp3": "/react-game/static/media/click.400e8b56.mp3",
+    "static/media/music.719db157.mp3": "/react-game/static/media/music.719db157.mp3",
+    "static/media/footer.css": "/react-game/static/media/rs_school.dc794067.svg",
+    "static/media/win.36e5e8aa.mp3": "/react-game/static/media/win.36e5e8aa.mp3"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a8de5e2f.js",
+    "static/js/2.de8d8dae.chunk.js",
+    "static/css/main.70a67c6e.chunk.css",
+    "static/js/main.064521d5.chunk.js"
+  ]
+}
