@@ -1,0 +1,13 @@
+.play-button {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 37px;
+  color: #f7fc00;
+  background: linear-gradient(180deg, rgba(251, 10, 10, 0.58) 0%, #fb0a0a 100%);
+  border-radius: 40px;
+  cursor: pointer;
+  outline: none;
+  width: 150px;
+  height: 53px;
+}

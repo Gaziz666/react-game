@@ -1,0 +1,49 @@
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 29px 40px 0;
+  width: 100%;
+}
+
+.flag {
+  background-image: url('../../assets/img/flags.png');
+  width: 127px;
+  height: 53px;
+}
+
+.lose {
+  width: 127px;
+  height: 53px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 35px;
+  color: #fc0000;
+  text-align: center;
+}
+
+.win {
+  width: 127px;
+  height: 53px;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 35px;
+  color: #f8fc00;
+  text-align: center;
+}
+
+.header-button {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 18px;
+  color: #f7fc00;
+  -webkit-text-stroke: 1px rgba(251, 10, 10, 0.27);
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  width: 100px;
+}

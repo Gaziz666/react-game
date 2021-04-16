@@ -1,0 +1,26 @@
+.start-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+
+.select-game {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  margin-top: 50px;
+}
+
+.select {
+  width: 200px;
+  background-color: rgb(195, 33, 195);
+}
+
+.select-wrapper {
+  margin: 20px;
+}

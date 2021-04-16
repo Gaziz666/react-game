@@ -1,0 +1,21 @@
+.footer {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  display: flex;
+  flex-direction: row;
+}
+
+.rs-logo {
+  background-image: url('../../assets/img/rs_school.svg');
+  background-size: cover;
+  width: 50px;
+  height: 19px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.margin {
+  margin-left: 2px;
+  margin-right: 2px;
+}
