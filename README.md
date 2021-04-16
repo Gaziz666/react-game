@@ -8,7 +8,7 @@ Main Hunter is mainer game.
 Deploy: https://gaziz666.github.io/react-game/#/react-game/main
 
 PR with mentor comments
-4. [search panel](https://github.com/Rrroman/travel-app/pull/17)
+[main](https://github.com/Rrroman/travel-app/pull/17)
 
 
 ## Steck
